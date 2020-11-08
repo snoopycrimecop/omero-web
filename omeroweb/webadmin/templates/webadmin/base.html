@@ -31,14 +31,14 @@
             // initially hidden
             $("#user_dropdown ul").css('visibility', 'hidden');
             // show on click
-            $("#show_user_dropdown").click(function(e) {
+            $("#show_user_dropdown").on('click', function(e) {
                 
                 $("ul", $(this).parent()).css('visibility', 'visible');
                 e.preventDefault();
                 return false;
             });
             // on hover-out, hide drop-down menus
-            $("#user_dropdown ul").hover(function(){}, function(){
+            $("#user_dropdown ul").on("hover", function(){}, function(){
                 $(this).css('visibility', 'hidden');
             });
             

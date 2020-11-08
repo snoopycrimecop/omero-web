@@ -1849,7 +1849,8 @@ def load_metadata_acquisition(
                             conn.getEnumerationEntries("ContrastMethodI")
                         ),
                         "modes": list(conn.getEnumerationEntries("AcquisitionModeI")),
-                    }
+                    },
+                    auto_id=False,
                 )
                 # 9853 Much metadata is not available to 'shares'
                 if share_id is None:
@@ -2002,7 +2003,8 @@ def load_metadata_acquisition(
                             "mediums": mediums,
                             "immersions": immersions,
                             "corrections": corrections,
-                        }
+                        },
+                        auto_id=False,
                     )
                     form_instrument_objectives.append(obj_form)
                 filters = list(instrument.getFilters())
@@ -2014,13 +2016,16 @@ def load_metadata_acquisition(
                                 "types": list(
                                     conn.getEnumerationEntries("FilterTypeI")
                                 ),
-                            }
+                            },
+                            auto_id=False,
                         )
                         form_filters.append(form_filter)
 
                 dichroics = list(instrument.getDichroics())
                 for d in dichroics:
-                    form_dichroic = MetadataDichroicForm(initial={"dichroic": d})
+                    form_dichroic = MetadataDichroicForm(
+                        initial={"dichroic": d}, auto_id=False
+                    )
                     form_dichroics.append(form_dichroic)
 
                 detectors = list(instrument.getDetectors())
@@ -2033,7 +2038,8 @@ def load_metadata_acquisition(
                                 "types": list(
                                     conn.getEnumerationEntries("DetectorTypeI")
                                 ),
-                            }
+                            },
+                            auto_id=False,
                         )
                         form_detectors.append(form_detector)
 
@@ -2053,7 +2059,8 @@ def load_metadata_acquisition(
                                     conn.getEnumerationEntries("LaserMediumI")
                                 ),
                                 "pulses": list(conn.getEnumerationEntries("PulseI")),
-                            }
+                            },
+                            auto_id=False,
                         )
                         form_lasers.append(form_laser)
 

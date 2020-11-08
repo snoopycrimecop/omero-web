@@ -345,7 +345,7 @@ OME.initToolbarDropdowns = function() {
     $(".toolbar_dropdown ul").css('visibility', 'hidden');
     // show on click
     var $toolbar_dropdownlists = $(".toolbar_dropdown ul");
-    $(".toolbar_dropdown button").click(function(e) {
+    $(".toolbar_dropdown button").on('click', function(e) {
         // hide any other lists that might be showing...
         $toolbar_dropdownlists.css('visibility', 'hidden');
         // then show this one...
@@ -354,12 +354,12 @@ OME.initToolbarDropdowns = function() {
         return false;
     });
     // on hover-out, hide drop-down menus
-    $toolbar_dropdownlists.hover(function(){}, function(){
+    $toolbar_dropdownlists.on("hover", function(){}, function(){
         $(this).css('visibility', 'hidden');
     });
 
     // For Figure scripts, we need a popup:
-    $("#figScriptList li a").click(function(event){
+    $("#figScriptList li a").on('click', function(event){
         if (!$(this).parent().hasClass("disabled")) {
             OME.openScriptWindow(event, 800, 600);
         }
@@ -554,7 +554,7 @@ OME.handleDelete = function(deleteUrl, filesetCheckUrl, userId) {
     // clear previous stuff from form
     $.removeData(del_form, "clicked_button");
     $("#delete_contents_form").show();
-    del_form.unbind("dialogclose");
+    del_form.off("dialogclose");
     del_form.find("input[type='checkbox']").prop('checked', false);
 
     // set up form - process all the objects for data-types and children
@@ -623,7 +623,7 @@ OME.handleDelete = function(deleteUrl, filesetCheckUrl, userId) {
     if (!askDeleteContents) $("#delete_contents_form").hide();  // don't ask about deleting contents
 
     // callback when delete dialog is closed
-    del_form.bind("dialogclose", function(event, ui) {
+    del_form.on("dialogclose", function(event, ui) {
         if (del_form.data("clicked_button") == "Yes") {
             var delete_anns = $("#delete_anns").prop('checked');
             var delete_content = true;      // $("#delete_content").prop('checked');
@@ -713,14 +713,14 @@ OME.handleDelete = function(deleteUrl, filesetCheckUrl, userId) {
     var $deleteYesBtn = $('.delete_confirm_dialog .ui-dialog-buttonset button:nth-child(1)'),
         $deleteNoBtn = $('.delete_confirm_dialog .ui-dialog-buttonset button:nth-child(2) span');
     $.get(filesetCheckUrl + "?" + OME.get_tree_selection(), function(html){
-        html = $.trim(html);
+        html = html.trim();
         if($('div.split_fileset', html).length > 0) {
             var $del_form_content = del_form.children().hide();
             del_form.append(html);
             $deleteYesBtn.hide();
             $deleteNoBtn.text("Cancel");
             // On dialog close, clean-up what we changed above
-            del_form.bind("dialogclose", function(event, ui) {
+            del_form.on("dialogclose", function(event, ui) {
                 $deleteYesBtn.show();
                 $deleteNoBtn.text("No");
                 $(".split_filesets_info", del_form).remove();
@@ -755,7 +755,7 @@ OME.nodeHasPermission = function(node, permission) {
     */
 
     // Require that all nodes have the necessary permissions
-    if ($.isArray(node)) {
+    if (Array.isArray(node)) {
         for (var index in node) {
             if (!OME.nodeHasPermission(node[index], permission)) {
                 return false;

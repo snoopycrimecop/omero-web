@@ -23,13 +23,13 @@
         $(document).ready(function()
             {
 
-                $(".dropdown_menu .menu_launch").click(function(e){
+                $(".dropdown_menu .menu_launch").on('click', function(e){
                     $(this).parent().find('ul').css('visibility', 'visible');
                     $(this).parent().find('.dropdown_menu_options').show();
                     return false;
                 });
                 // on hover-out of the menu itself, hide drop-down menus
-                $(".dropdown_menu_options").hover(function(){}, function(){
+                $(".dropdown_menu_options").on("hover", function(){}, function(){
                     $(this).css('visibility', 'hidden');
                 }).hide();
 
