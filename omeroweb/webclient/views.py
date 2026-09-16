@@ -469,7 +469,9 @@ def _load_template(request, menu, conn=None, url=None, **kwargs):
         ):
             # this is likely a regular user who needs to log in as themselves.
             # Login then redirect to current url
-            return HttpResponseRedirect("%s?url=%s" % (reverse("weblogin"), url))
+            return HttpResponseRedirect(
+                "%s?url=%s" % (reverse(settings.LOGIN_VIEW), url)
+            )
 
     # need to be sure that tree will be correct omero.group
     if first_sel is not None:
