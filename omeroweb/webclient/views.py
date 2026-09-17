@@ -256,7 +256,9 @@ class WebclientLoginView(LoginView):
             except Exception:
                 url = reverse("webindex")
 
-        if url_has_allowed_host_and_scheme(url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS):
+        if url_has_allowed_host_and_scheme(
+            url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS
+        ):
             return HttpResponseRedirect(url)
         else:
             return HttpResponseRedirect(reverse("webindex"))
@@ -342,7 +344,9 @@ def change_active_group(request, conn=None, url=None, **kwargs):
     # avoid recursive calls
     if url is None or url.startswith(reverse("change_active_group")):
         url = reverse("webindex")
-    if url_has_allowed_host_and_scheme(url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS):
+    if url_has_allowed_host_and_scheme(
+        url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS
+    ):
         return HttpResponseRedirect(url)
     else:
         return HttpResponseRedirect(reverse("webindex"))
@@ -460,10 +464,14 @@ def _load_template(request, menu, conn=None, url=None, **kwargs):
         ):
             # this is likely a regular user who needs to log in as themselves.
             # Login then redirect to current url
-            if not url_has_allowed_host_and_scheme(url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS):
+            if not url_has_allowed_host_and_scheme(
+                url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS
+            ):
                 url = reverse("webindex")
             redirect_url = "%s?url=%s" % (reverse(settings.LOGIN_VIEW), url)
-            if url_has_allowed_host_and_scheme(redirect_url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS):
+            if url_has_allowed_host_and_scheme(
+                redirect_url, allowed_hosts=settings.REDIRECT_ALLOWED_HOSTS
+            ):
                 return HttpResponseRedirect(redirect_url)
             else:
                 return HttpResponseRedirect(reverse("webindex"))
